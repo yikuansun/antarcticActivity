@@ -9,12 +9,22 @@ app.on("ready", () => {
         timeout = 200;
     }
     setTimeout(function () {
+        var mainWindow = new BrowserWindow({
+            width: 300,
+            height: 400,
+            backgroundColor: "#222222",
+            frame: false,
+            webPreferences: {
+                nodeIntegration: true,
+                enableRemoteModule: true,
+                contextIsolation: false,
+            },
+        });
+        mainWindow.loadURL("window/index.html");
+
         TrayWindow.setOptions({
             trayIconPath: "window/icon.png",
-            windowUrl: `file://${path.join(__dirname, "window/index.html")}`,
-            //windowUrl: "https://google.com",
-            width: 340,
-            height: 380,
+            window: mainWindow,
         });
     }, timeout);
 });
