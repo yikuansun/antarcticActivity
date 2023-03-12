@@ -31,15 +31,10 @@ app.on("ready", () => {
         tray = new Tray("window/icon.png");
         tray.setContextMenu(Menu.buildFromTemplate([
             {
-                label: "Show Window",
+                label: "Show/Hide Window",
                 click: function() {
-                    mainWindow.show();
-                }
-            },
-            {
-                label: "Hide",
-                click: function() {
-                    mainWindow.hide();
+                    if (!mainWindow.isVisible()) mainWindow.show();
+                    else mainWindow.hide();
                 }
             },
             { label: "Terminate", role: "quit" }
