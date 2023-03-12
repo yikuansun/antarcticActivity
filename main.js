@@ -6,7 +6,7 @@ const path = require("path");
 app.on("ready", () => {
     var timeout = 10;
     if (process.platform === "linux") {
-        timeout = 200;
+        timeout = 500;
     }
     setTimeout(function () {
         var mainWindow = new BrowserWindow({
@@ -20,7 +20,8 @@ app.on("ready", () => {
                 contextIsolation: false,
             },
         });
-        mainWindow.loadURL("window/index.html");
+        mainWindow.loadFile(path.join(__dirname, "window/index.html"));
+        require("@electron/remote/main").enable(mainWindow);
 
         TrayWindow.setOptions({
             trayIconPath: "window/icon.png",
