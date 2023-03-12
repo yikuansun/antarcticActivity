@@ -1,0 +1,27 @@
+{
+    "name": "antarcticactivity",
+    "packageName": "Antarctic Activity",
+    "version": "0.0.1",
+    "description": "Screentime tracker",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yikuansun/antarcticActivity.git"
+    },
+    "keywords": [
+        "Screentime",
+        "activity"
+    ],
+    "author": "Yikuan Sun",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/yikuansun/antarcticActivity/issues"
+    },
+    "homepage": "https://github.com/yikuansun/antarcticActivity#readme",
+    "dependencies": {
+        "electron-tray-window": "^1.2.7"
+    }
+}
