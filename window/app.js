@@ -1,3 +1,10 @@
-const { powerMonitor } = require("@electron/remote");
+var startupTime = (new Date()).getTime();
 
-document.write(powerMonitor.getSystemIdleTime());
+function getScreentime() {
+    var currentTime = (new Date()).getTime();
+    var timeElapsed = currentTime - startupTime;
+
+    document.write(timeElapsed);
+}
+
+setInterval(getScreentime, 200);
