@@ -38,6 +38,8 @@ function getActivityStats() {
         }
     }
     document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(todayScreentime);
+
+    document.querySelector("#sessionstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
 }
 
 setInterval(getScreentime, 60000);
