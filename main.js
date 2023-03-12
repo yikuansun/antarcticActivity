@@ -41,3 +41,7 @@ app.on("ready", () => {
         ]));
     }, timeout);
 });
+
+ipcMain.on("hideWindow", function() {
+    mainWindow.hide();
+});

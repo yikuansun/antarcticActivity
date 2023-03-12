@@ -1,6 +1,7 @@
 var fs = require("fs");
 var path = require("path");
 var { app } = require("@electron/remote");
+var { ipcRenderer } = require("electron");
 
 var saveFilePath = path.join(app.getPath("userData"), "saveFile.json");
 if (!fs.existsSync(saveFilePath)) fs.writeFileSync(saveFilePath, "[]");
@@ -45,3 +46,7 @@ function getActivityStats() {
 setInterval(getScreentime, 60000);
 getActivityStats();
 setInterval(getActivityStats, 60000);
+
+document.querySelector("#closeButton").addEventListener("click", function() {
+    ipcRenderer.send("hideWindow");
+});

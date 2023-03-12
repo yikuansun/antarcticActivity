@@ -1,0 +1,33 @@
+#draggable {
+    -webkit-app-region: drag;
+    cursor: move;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: calc(100vw - 32px);
+    height: 32px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    line-height: 32px;
+    user-select: none;
+}
+
+#closeButton {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    line-height: 32px;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+#closeButton:hover {
+    cursor: pointer;
+    background-color: grey;
+}
