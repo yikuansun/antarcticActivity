@@ -15,7 +15,7 @@ saveFileData.push(currentSessionData);
 var startupTime = (new Date()).getTime();
 
 function hoursMinutes(ms) {
-    var minutes = Math.floor(ms / 60000);
+    var minutes = Math.floor(ms / 60000) % 60;
     var hours = Math.floor(ms / 3600000);
     return "" + ((hours < 10)?"0":"") + hours + ":" + ((minutes < 10)?"0":"") + minutes;
 }
