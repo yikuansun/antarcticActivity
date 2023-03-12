@@ -1,21 +1,22 @@
 
-const { ipcMain, Tray, app, BrowserWindow } = require("electron");
+const { ipcMain, Tray, app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 require("@electron/remote/main").initialize();
 
+var tray = null, mainWindow;
 app.on("ready", () => {
     var timeout = 10;
     if (process.platform === "linux") {
         timeout = 200;
     }
     setTimeout(function () {
-        var mainWindow = new BrowserWindow({
+        mainWindow = new BrowserWindow({
             width: 300,
             height: 400,
             backgroundColor: "#222222",
             frame: false,
             alwaysOnTop: true,
-            show: true,
+            show: false,
             useContentSize: true,
             webPreferences: {
                 nodeIntegration: true,
@@ -27,5 +28,21 @@ app.on("ready", () => {
         mainWindow.loadFile(path.join(__dirname, "window/index.html"));
         require("@electron/remote/main").enable(mainWindow.webContents);
 
+        tray = new Tray("window/icon.png");
+        tray.setContextMenu(Menu.buildFromTemplate([
+            {
+                label: "Show Window",
+                click: function() {
+                    mainWindow.show();
+                }
+            },
+            {
+                label: "Hide",
+                click: function() {
+                    mainWindow.hide();
+                }
+            },
+            { label: "Terminate", role: "quit" }
+        ]));
     }, timeout);
 });
