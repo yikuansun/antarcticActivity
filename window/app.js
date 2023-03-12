@@ -22,4 +22,4 @@ function getScreentime() {
     fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
 }
 
-setInterval(getScreentime, 1000);
+setInterval(getScreentime, 60000);
