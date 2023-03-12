@@ -23,6 +23,6 @@
     "homepage": "https://github.com/yikuansun/antarcticActivity#readme",
     "dependencies": {
         "@electron/remote": "^2.0.9",
-        "electron-tray-window": "^1.2.7"
+        "electron": "^23.1.3"
     }
 }
