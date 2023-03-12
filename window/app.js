@@ -22,4 +22,18 @@ function getScreentime() {
     fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
 }
 
+function getActivityStats() {
+    var todayScreentime = 0;
+    var today = new Date();
+    for (var session of saveFileData) {
+        var sessionDate = new Date(Date.parse(session.date));
+        if (sessionDate.getDate() == today.getDate() && sessionDate.getMonth() == today.getMonth() && sessionDate.getFullYear() == today.getFullYear()) {
+            todayScreentime += session.timeElapsed;
+        }
+    }
+    document.querySelector("#todaystDisplay").innerHTML = todayScreentime;
+}
+
 setInterval(getScreentime, 60000);
+getActivityStats();
+setInterval(getActivityStats, 60000);
