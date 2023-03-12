@@ -14,6 +14,12 @@ saveFileData.push(currentSessionData);
 
 var startupTime = (new Date()).getTime();
 
+function hoursMinutes(ms) {
+    var minutes = Math.floor(ms / 60000);
+    var hours = Math.floor(ms / 3600000);
+    return "" + ((hours < 10)?"0":"") + hours + ":" + ((minutes < 10)?"0":"") + minutes;
+}
+
 function getScreentime() {
     var currentTime = (new Date()).getTime();
     var timeElapsed = currentTime - startupTime;
@@ -31,7 +37,7 @@ function getActivityStats() {
             todayScreentime += session.timeElapsed;
         }
     }
-    document.querySelector("#todaystDisplay").innerHTML = todayScreentime;
+    document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(todayScreentime);
 }
 
 setInterval(getScreentime, 60000);
