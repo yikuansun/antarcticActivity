@@ -31,16 +31,24 @@ function getScreentime() {
 
 function getActivityStats() {
     var todayScreentime = 0;
+    var currentWeekScreentime = 0;
     var today = new Date();
+    var weekFirstDay = (new Date()).setDate(today.getDate() - today.getDay());
+    var weekLastDay = (new Date()).setDate(today.getDate() - today.getDay() + 6);
     for (var session of saveFileData) {
         var sessionDate = new Date(Date.parse(session.date));
         if (sessionDate.getDate() == today.getDate() && sessionDate.getMonth() == today.getMonth() && sessionDate.getFullYear() == today.getFullYear()) {
             todayScreentime += session.timeElapsed;
         }
+        if (sessionDate.getTime() < weekLastDay && sessionDate.getTime() > weekFirstDay) {
+            currentWeekScreentime += session.timeElapsed;
+        }
     }
     document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(todayScreentime);
 
     document.querySelector("#sessionstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
+
+    document.querySelector("#currentWeekstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
 }
 
 setInterval(getScreentime, 60000);
