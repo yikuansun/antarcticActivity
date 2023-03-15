@@ -41,7 +41,6 @@ function getActivityStats() {
     weekLastDay.setDate(today.getDate() - today.getDay() + 6);
     weekLastDay.setHours(23);
     weekLastDay.setMinutes(59);
-    console.log(today, weekFirstDay, weekLastDay)
     for (var session of saveFileData) {
         var sessionDate = new Date(Date.parse(session.date));
         if (sessionDate.getDate() == today.getDate() && sessionDate.getMonth() == today.getMonth() && sessionDate.getFullYear() == today.getFullYear()) {
@@ -49,10 +48,7 @@ function getActivityStats() {
         }
         if (sessionDate.getTime() <= weekLastDay.getTime() && sessionDate.getTime() >= weekFirstDay.getTime()) {
             currentWeekScreentime += session.timeElapsed;
-            console.log("facts", session.timeElapsed)
-            console.log(currentWeekScreentime)
         }
-        console.log(sessionDate)
     }
     document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(todayScreentime);
 
