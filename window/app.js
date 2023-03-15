@@ -33,22 +33,32 @@ function getActivityStats() {
     var todayScreentime = 0;
     var currentWeekScreentime = 0;
     var today = new Date();
-    var weekFirstDay = (new Date()).setDate(today.getDate() - today.getDay());
-    var weekLastDay = (new Date()).setDate(today.getDate() - today.getDay() + 6);
+    var weekFirstDay = new Date();
+    weekFirstDay.setDate(today.getDate() - today.getDay());
+    weekFirstDay.setHours(0);
+    weekFirstDay.setMinutes(0);
+    var weekLastDay = new Date();
+    weekLastDay.setDate(today.getDate() - today.getDay() + 6);
+    weekLastDay.setHours(23);
+    weekLastDay.setMinutes(59);
+    console.log(today, weekFirstDay, weekLastDay)
     for (var session of saveFileData) {
         var sessionDate = new Date(Date.parse(session.date));
         if (sessionDate.getDate() == today.getDate() && sessionDate.getMonth() == today.getMonth() && sessionDate.getFullYear() == today.getFullYear()) {
             todayScreentime += session.timeElapsed;
         }
-        if (sessionDate.getTime() < weekLastDay && sessionDate.getTime() > weekFirstDay) {
+        if (sessionDate.getTime() <= weekLastDay.getTime() && sessionDate.getTime() >= weekFirstDay.getTime()) {
             currentWeekScreentime += session.timeElapsed;
+            console.log("facts", session.timeElapsed)
+            console.log(currentWeekScreentime)
         }
+        console.log(sessionDate)
     }
     document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(todayScreentime);
 
     document.querySelector("#sessionstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
 
-    document.querySelector("#currentWeekstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
+    document.querySelector("#currentWeekstDisplay").innerHTML = hoursMinutes(currentWeekScreentime);
 }
 
 setInterval(getScreentime, 60000);
