@@ -1,6 +1,6 @@
 {
-    "name": "antarcticactivity",
-    "packageName": "Antarctic Activity",
+    "name": "screenagerspray",
+    "packageName": "Screenager Spray",
     "version": "0.0.1",
     "description": "Screentime tracker",
     "main": "main.js",
