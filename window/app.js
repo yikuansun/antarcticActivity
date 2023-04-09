@@ -10,6 +10,12 @@ function getWeekStart(d=new Date()) {
     return weekFirstDay;
 }
 
+function hoursMinutes(ms) {
+    var minutes = Math.floor(ms / 60000) % 60;
+    var hours = Math.floor(ms / 3600000);
+    return "" + ((hours < 10)?"0":"") + hours + ":" + ((minutes < 10)?"0":"") + minutes;
+}
+
 var saveFilePath = path.join(app.getPath("userData"), "saveFile.json");
 if (!fs.existsSync(saveFilePath)) fs.writeFileSync(saveFilePath, JSON.stringify({
     weeks: {},
@@ -50,17 +56,9 @@ function getDayAndWeek() {
 }
 getDayAndWeek();
 
-function hoursMinutes(ms) {
-    var minutes = Math.floor(ms / 60000) % 60;
-    var hours = Math.floor(ms / 3600000);
-    return "" + ((hours < 10)?"0":"") + hours + ":" + ((minutes < 10)?"0":"") + minutes;
-}
-
-function getActivityStats() {
+function showStats() {
     document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(currentDayData.timeElapsed);
-
     document.querySelector("#sessionstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
-
     document.querySelector("#currentWeekstDisplay").innerHTML = hoursMinutes(currentWeekData.timeElapsed);
 }
 
@@ -70,9 +68,9 @@ setInterval(function() {
     currentDayData.timeElapsed += 60000;
     currentWeekData.timeElapsed += 60000;
     fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
+    showStats();
 }, 60000);
-getActivityStats();
-setInterval(getActivityStats, 60000);
+showStats();
 
 document.querySelector("#closeButton").addEventListener("click", function() {
     ipcRenderer.send("hideWindow");
