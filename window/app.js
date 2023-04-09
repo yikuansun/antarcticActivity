@@ -24,28 +24,31 @@ var currentSessionData = {
 };
 saveFileData.sessions[(new Date()).getTime()] = currentSessionData;
 var currentDayData, currentWeekData;
-if (saveFileData.days[(new Date()).toDateString()]) {
-    currentDayData = saveFileData.days[(new Date()).toDateString()];
+function getDayAndWeek() {
+    if (saveFileData.days[(new Date()).toDateString()]) {
+        currentDayData = saveFileData.days[(new Date()).toDateString()];
+    }
+    else {
+        currentDayData = {
+            date: (new Date()).toDateString(),
+            timeElapsed: 0,
+        };
+        saveFileData.days[(new Date()).toDateString()] = currentDayData;
+        fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
+    }
+    if (saveFileData.weeks[(getWeekStart(new Date())).toDateString()]) {
+        currentWeekData = saveFileData.weeks[(getWeekStart(new Date())).toDateString()];
+    }
+    else {
+        currentWeekData = {
+            startDate: (getWeekStart(new Date())).toDateString(),
+            timeElapsed: 0,
+        };
+        saveFileData.weeks[(getWeekStart(new Date())).toDateString()] = currentWeekData;
+        fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
+    }
 }
-else {
-    currentDayData = {
-        date: (new Date()).toDateString(),
-        timeElapsed: 0,
-    };
-    saveFileData.days[(new Date()).toDateString()] = currentDayData;
-    fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
-}
-if (saveFileData.weeks[(getWeekStart(new Date())).toDateString()]) {
-    currentWeekData = saveFileData.weeks[(getWeekStart(new Date())).toDateString()];
-}
-else {
-    currentWeekData = {
-        startDate: (getWeekStart(new Date())).toDateString(),
-        timeElapsed: 0,
-    };
-    saveFileData.weeks[(getWeekStart(new Date())).toDateString()] = currentWeekData;
-    fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
-}
+getDayAndWeek();
 
 function hoursMinutes(ms) {
     var minutes = Math.floor(ms / 60000) % 60;
@@ -62,6 +65,7 @@ function getActivityStats() {
 }
 
 setInterval(function() {
+    getDayAndWeek();
     currentSessionData.timeElapsed += 60000;
     currentDayData.timeElapsed += 60000;
     currentWeekData.timeElapsed += 60000;
