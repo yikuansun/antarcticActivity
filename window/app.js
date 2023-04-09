@@ -32,7 +32,7 @@ else {
         date: (new Date()).toDateString(),
         timeElapsed: 0,
     };
-    saveFileData.days[(getWeekStart(new Date())).toDateString()] = currentDayData;
+    saveFileData.days[(new Date()).toDateString()] = currentDayData;
     fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
 }
 if (saveFileData.weeks[(getWeekStart(new Date())).toDateString()]) {
