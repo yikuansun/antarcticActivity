@@ -4,7 +4,7 @@ var { app } = require("@electron/remote");
 var { ipcRenderer } = require("electron");
 
 function getWeekStart(d=new Date()) {
-    var current = new Date();
+    var current = new Date(d.getTime());
     var first = current.getDate() - current.getDay();
     var weekFirstDay = new Date(current.setDate(first));
     return weekFirstDay;
