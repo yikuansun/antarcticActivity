@@ -55,43 +55,20 @@ function hoursMinutes(ms) {
     return "" + ((hours < 10)?"0":"") + hours + ":" + ((minutes < 10)?"0":"") + minutes;
 }
 
-function getScreentime() {
-    var currentTime = (new Date()).getTime();
-    var timeElapsed = currentTime - startupTime;
-
-    currentSessionData.timeElapsed = timeElapsed;
-    fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
-}
-
 function getActivityStats() {
-    var todayScreentime = 0;
-    var currentWeekScreentime = 0;
-    var today = new Date();
-    var weekFirstDay = new Date();
-    weekFirstDay.setDate(today.getDate() - today.getDay());
-    weekFirstDay.setHours(0);
-    weekFirstDay.setMinutes(0);
-    var weekLastDay = new Date();
-    weekLastDay.setDate(today.getDate() - today.getDay() + 6);
-    weekLastDay.setHours(23);
-    weekLastDay.setMinutes(59);
-    for (var session of saveFileData) {
-        var sessionDate = new Date(Date.parse(session.date));
-        if (sessionDate.getDate() == today.getDate() && sessionDate.getMonth() == today.getMonth() && sessionDate.getFullYear() == today.getFullYear()) {
-            todayScreentime += session.timeElapsed;
-        }
-        if (sessionDate.getTime() <= weekLastDay.getTime() && sessionDate.getTime() >= weekFirstDay.getTime()) {
-            currentWeekScreentime += session.timeElapsed;
-        }
-    }
-    document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(todayScreentime);
+    document.querySelector("#todaystDisplay").innerHTML = hoursMinutes(currentDayData.timeElapsed);
 
     document.querySelector("#sessionstDisplay").innerHTML = hoursMinutes(currentSessionData.timeElapsed);
 
-    document.querySelector("#currentWeekstDisplay").innerHTML = hoursMinutes(currentWeekScreentime);
+    document.querySelector("#currentWeekstDisplay").innerHTML = hoursMinutes(currentWeekData.timeElapsed);
 }
 
-setInterval(getScreentime, 60000);
+setInterval(function() {
+    currentSessionData.timeElapsed += 60000;
+    currentDayData.timeElapsed += 60000;
+    currentWeekData.timeElapsed += 60000;
+    fs.writeFileSync(saveFilePath, JSON.stringify(saveFileData));
+}, 60000);
 getActivityStats();
 setInterval(getActivityStats, 60000);
 
